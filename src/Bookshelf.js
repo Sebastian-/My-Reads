@@ -1,5 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import Book from './Book'
 
 // TODO: change to functional component if no state required
 
@@ -23,7 +24,7 @@ class Bookshelf extends React.Component {
         <div className="bookshelf-books">
           <ol className="books-grid">
             {this.props.books.filter((book) => (book.shelf === this.props.name))
-                  .map((book) => (<li>{book.title}</li>))}
+                  .map((book) => (<Book key={book.id} book={book}/>))}
           </ol>
         </div>
       </div>
