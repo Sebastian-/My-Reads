@@ -8,28 +8,37 @@ class Book extends React.Component {
     book: propTypes.object.isRequired
   }
 
-  getCoverStyle() {
-    const coverImage = new Image()
-    coverImage.src = this.props.book.imageLinks.smallThumbnail
-    // Crop to avoid overflowing book-top div
-    const height = coverImage.height > 200 ? 200 : coverImage.height
-
-    return {
-      width: coverImage.width,
-      height: height,
-      backgroundImage: `url(${coverImage.src})`
+  state = {
+    coverStyle: {
+      height: 0,
+      width: 0,
+      backgroundImage: ''
     }
+  }
+
+  componentDidMount() {
+    const coverImage = new Image()
+    coverImage.onload = (event) => {
+      const img = event.target
+      this.setState({
+        coverStyle: {
+          height: img.height > 200 ? 200 : img.height,
+          width: img.width,
+          backgroundImage: `url(${img.src})`
+        }
+      })
+    }
+    coverImage.src = this.props.book.imageLinks.thumbnail
   }
 
   render() {
     const { book }= this.props
-    
-    
+
     return (
       <li>
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={this.getCoverStyle()}></div>
+            <div className="book-cover" style={this.state.coverStyle}></div>
             <div className="book-shelf-changer">
               <select>
                 <option value="move" disabled>Move to...</option>
