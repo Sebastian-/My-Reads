@@ -23,6 +23,16 @@ class BooksApp extends React.Component {
     })
   }
 
+  changeShelf = (book, newShelf) => {
+    if (book.shelf === newShelf) {return}
+    
+    this.setState((prevState) => ({
+      books: prevState.books.map((b) => {if (b.id === book.id) {
+        b.shelf = newShelf
+      } return b})
+    }));
+  }
+
   render() {
     console.log(this.state.books)
     return (
@@ -50,7 +60,7 @@ class BooksApp extends React.Component {
           </div>
         ) : (
           <div className="list-books">
-          <ListBooks books={this.state.books}/>
+          <ListBooks books={this.state.books} onChangeShelf={this.changeShelf}/>
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
