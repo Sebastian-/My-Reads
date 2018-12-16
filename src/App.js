@@ -2,6 +2,12 @@ import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import ListBooks from './ListBooks';
+import SearchBooks from './SearchBooks'
+
+// TODO: fix the way data is handled regarding shelves and changing the shelf
+// TODO: refactor ol book list into separate component
+// TODO: book list should not crash if no books are present
+// TODO: reconsider where the shevles constant is kept
 
 class BooksApp extends React.Component {
   state = {
@@ -38,6 +44,10 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         {this.state.showSearchPage ? (
+          <SearchBooks shelves={['currentlyReading', 'wantToRead', 'read']}
+            onChangeShelf={this.changeShelf}
+          />
+          /*
           <div className="search-books">
             <div className="search-books-bar">
               <button className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</button>
@@ -49,7 +59,7 @@ class BooksApp extends React.Component {
 
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
-                */}
+                }
                 <input type="text" placeholder="Search by title or author"/>
 
               </div>
@@ -57,7 +67,7 @@ class BooksApp extends React.Component {
             <div className="search-books-results">
               <ol className="books-grid"></ol>
             </div>
-          </div>
+          </div> */
         ) : (
           <div className="list-books">
           <ListBooks books={this.state.books} onChangeShelf={this.changeShelf}/>

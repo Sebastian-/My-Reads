@@ -21,6 +21,7 @@ class Book extends React.Component {
   }
 
   componentDidMount() {
+    if(!this.props.book.imageLinks) return
     const coverImage = new Image()
     coverImage.onload = (event) => {
       const img = event.target
@@ -46,7 +47,7 @@ class Book extends React.Component {
             <BookshelfChanger currShelf={currShelf} shelves={shelves} book={book} onChangeShelf={this.props.onChangeShelf}/>
           </div>
           <div className="book-title">{book.title}</div>
-          <div className="book-authors">{book.authors.map((a) => (<p key={a}>{a}</p>))}</div>
+          <div className="book-authors">{book.authors ? book.authors.map((a) => (<p key={a}>{a}</p>)) : ''}</div>
         </div>
       </li>
     )

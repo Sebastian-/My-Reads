@@ -3,6 +3,7 @@ import propTypes from 'prop-types'
 import Book from './Book'
 
 // TODO: change to functional component if no state required
+// TODO: add default text when no books are present in shelf
 
 class Bookshelf extends React.Component {
   static propTypes = {
