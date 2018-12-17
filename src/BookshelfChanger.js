@@ -3,6 +3,7 @@ import propTypes from 'prop-types'
 
 // TODO: change to functional component if no state required
 // TODO: refactor so that shelfNameToTitle is not duplicated here and in Bookshelf
+// TODO: handle changing shelves and updating server at the same time
 
 class BookshelfChanger extends React.Component {
   static propTypes = {

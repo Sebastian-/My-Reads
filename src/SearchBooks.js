@@ -1,7 +1,7 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import Book from './Book'
-import propTypes from 'prop-types'
+//import propTypes from 'prop-types'
 
 // TODO: change to functional component if no state required
 // TODO: do not import everything from booksapi if not necessary

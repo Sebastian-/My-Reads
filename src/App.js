@@ -8,6 +8,7 @@ import SearchBooks from './SearchBooks'
 // TODO: refactor ol book list into separate component
 // TODO: book list should not crash if no books are present
 // TODO: reconsider where the shevles constant is kept
+// TODO: dont die when search term doesnt work
 
 class BooksApp extends React.Component {
   state = {

@@ -21,7 +21,7 @@ class ListBooks extends React.Component {
         <div className="list-books-content">
           {shelves.map((shelf) => (<Bookshelf key={shelf} 
                                               shelfName={shelf} 
-                                              books={this.props.books} 
+                                              books={this.props.books.filter((book) => (book.shelf === shelf))} 
                                               shelves={shelves} 
                                               onChangeShelf={this.props.onChangeShelf}/>))}
         </div>
