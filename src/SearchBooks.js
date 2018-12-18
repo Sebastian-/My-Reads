@@ -23,6 +23,12 @@ class SearchBooks extends React.Component {
   search = () => {
     console.log(this.state.query)
     BooksAPI.search(this.state.query).then((results) => {
+      results = results.map((res) => {
+        if (this.props.books[res.id]) {
+          res.shelf=this.props.books[res.id]
+        }
+        return res
+      })
       this.setState({
         results: results || []
       })
@@ -30,6 +36,7 @@ class SearchBooks extends React.Component {
   }
 
   render() {
+    console.log(this.state.results, this.props.books)
     return (
       <div className="search-books">
         <div className="search-books-bar">

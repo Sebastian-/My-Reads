@@ -4,11 +4,10 @@ import './App.css'
 import ListBooks from './ListBooks';
 import SearchBooks from './SearchBooks'
 
-// TODO: fix the way data is handled regarding shelves and changing the shelf
-// TODO: refactor ol book list into separate component
 // TODO: book list should not crash if no books are present
 // TODO: reconsider where the shevles constant is kept
 // TODO: dont die when search term doesnt work
+// TODO: search endpoint does not provide shelf info, must be passed from app component
 
 class BooksApp extends React.Component {
   state = {
@@ -34,10 +33,15 @@ class BooksApp extends React.Component {
     if (book.shelf === newShelf) {return}
     
     this.setState((prevState) => ({
-      books: prevState.books.map((b) => {if (b.id === book.id) {
-        b.shelf = newShelf
-      } return b})
+      books: prevState.books.map((b) => {
+        if (b.id === book.id) {
+          b.shelf = newShelf
+        } 
+        return b
+      })
     }));
+
+    BooksAPI.update(book, newShelf)
   }
 
   render() {
@@ -45,7 +49,7 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         {this.state.showSearchPage ? (
-          <SearchBooks shelves={['currentlyReading', 'wantToRead', 'read']}
+          <SearchBooks books={this.state.books.reduce((map, book) => {map[book.id] = book.shelf; return map}, {})} shelves={['currentlyReading', 'wantToRead', 'read']}
             onChangeShelf={this.changeShelf}
           />
           /*

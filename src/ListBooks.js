@@ -3,7 +3,6 @@ import propTypes from 'prop-types'
 import Bookshelf from './Bookshelf'
 
 // TODO: change to functional component if no state required
-// TODO: consider passing a filtered list of books into each bookshelf here
 
 class ListBooks extends React.Component {
   static propTypes = {
