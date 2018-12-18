@@ -6,18 +6,21 @@ import Book from './Book'
 
 class BookGrid extends React.Component {
   static propTypes = {
-    books: propTypes.array.isRequired
+    books: propTypes.array.isRequired,
+    onChangeShelf: propTypes.func.isRequired,
   }
 
   render() {
+    const { books, onChangeShelf } = this.props
+
     return (
       <ol className="books-grid">
-        {this.props.books.map((book) => (<Book key={book.id} 
-                                    book={book} 
-                                    currShelf={book.shelf}
-                                    shelves={this.props.shelves}
-                                    onChangeShelf={this.props.onChangeShelf}
-                                    />))}
+        {books.map((book) => (
+          <Book 
+            key={book.id}
+            book={book}
+            onChangeShelf={onChangeShelf}/>
+        ))}
       </ol>
     )
   }

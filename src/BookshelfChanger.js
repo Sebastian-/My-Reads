@@ -1,38 +1,33 @@
 import React from 'react'
 import propTypes from 'prop-types'
-
-// TODO: change to functional component if no state required
-// TODO: refactor so that shelfNameToTitle is not duplicated here and in Bookshelf
-// TODO: handle changing shelves and updating server at the same time
+import * as utils from './utils'
 
 class BookshelfChanger extends React.Component {
   static propTypes = {
-    shelves: propTypes.array.isRequired,
-    currShelf: propTypes.string.isRequired
-  }
-
-  shelfNameToTitle(shelfName) {
-    const result = shelfName.replace(/([A-Z])/g, ' $1')
-    return result.charAt(0).toUpperCase() + result.slice(1)
+    shelfOptions: propTypes.array.isRequired,
+    book: propTypes.object.isRequired,
+    onChangeShelf: propTypes.func.isRequired,
   }
 
   handleChange = (event) => {
-    event.preventDefault()
+    const { book, onChangeShelf } = this.props
+    const newShelf = event.target.value
     
-    if(this.props.onChangeShelf) {
-        this.props.onChangeShelf(this.props.book, event.target.value)
-    }
+    onChangeShelf(book, newShelf)
   }
 
   render() {
-    const { shelves, currShelf } = this.props
+    const { book, shelfOptions } = this.props
 
     return (
       <div className="book-shelf-changer">
-        <select value={this.props.currShelf} onChange={this.handleChange}>
-          <option value="move" disabled>Move to...</option>
-          {shelves.map((shelf) => (<option key={shelf} value={shelf}>{(currShelf === shelf ? '*  ' : '   ') + this.shelfNameToTitle(shelf)}</option>))}
-          <option value="none">None</option>
+        <select value={(book.shelf || 'none')} onChange={this.handleChange}>
+          <option value="move" disabled>Current Shelf...</option>
+          {shelfOptions.map((shelf) => (
+            <option key={shelf} value={shelf}>
+              {((book.shelf || 'none') === shelf ? '\u2713' : ' ') + ' '
+              + utils.formatShelfName(shelf)}
+            </option>))}
         </select>
       </div>
     )

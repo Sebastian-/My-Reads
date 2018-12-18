@@ -2,52 +2,72 @@ import React from 'react'
 import propTypes from 'prop-types'
 import BookshelfChanger from './BookshelfChanger'
 
-// TODO: change to functional component if no state required
-
 class Book extends React.Component {
+  _isMounted = false
+
   static propTypes = {
     book: propTypes.object.isRequired,
-    currShelf: propTypes.string.isRequired,
-    shelves: propTypes.array.isRequired
+    onChangeShelf: propTypes.func.isRequired
   }
 
-  // TODO: remove backgroundImage since it's a prop
   state = {
-    coverStyle: {
-      height: 0,
-      width: 0,
-      backgroundImage: ''
-    }
+    coverHeight: 0,
+    coverWidth: 0
   }
 
   componentDidMount() {
-    if(!this.props.book.imageLinks) return
+    this._isMounted = true
+
+    // Determine cover image dimensions
+    const { imageLinks } = this.props.book
+    if(!imageLinks) return
+
     const coverImage = new Image()
     coverImage.onload = (event) => {
       const img = event.target
-      this.setState({
-        coverStyle: {
-          height: img.height > 200 ? 200 : img.height,
-          width: img.width,
-          backgroundImage: `url(${img.src})`
-        }
-      })
+      // _isMounted check prevents a warning if the book is unmounted before the image loads
+      if(this._isMounted) {
+        this.setState({
+          coverHeight: img.height > 200 ? 200 : img.height,
+          coverWidth: img.width > 130 ? 130 : img.width
+        })
+      }
     }
-    coverImage.src = this.props.book.imageLinks.thumbnail
+    coverImage.src = imageLinks.thumbnail || imageLinks.smallThumbnail
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false
   }
 
   render() {
-    const { book, currShelf, shelves }= this.props
+    const { book }= this.props
+    const { coverHeight, coverWidth } = this.state
+    const coverURL = (
+      book.imageLinks ? 
+      `url(${book.imageLinks.thumbnail || book.imageLinks.smallThumbnail})` 
+      : '')
 
     return (
       <li>
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={this.state.coverStyle}></div>
-            <BookshelfChanger currShelf={currShelf} shelves={shelves} book={book} onChangeShelf={this.props.onChangeShelf}/>
+            <div 
+              className="book-cover" 
+              style={{
+                height: coverHeight || 200,
+                width: coverWidth || 130,
+                backgroundImage: coverURL}}>
+            </div>
+            <BookshelfChanger 
+              shelfOptions={['currentlyReading', 'wantToRead', 'read', 'none']}
+              book={book}
+              onChangeShelf={this.props.onChangeShelf}/>
           </div>
           <div className="book-title">{book.title}</div>
-          <div className="book-authors">{book.authors ? book.authors.map((a) => (<p key={a}>{a}</p>)) : ''}</div>
+          <div className="book-authors">
+            {book.authors && book.authors.map((author) => (<p key={author}>{author}</p>))}
+          </div>
         </div>
       </li>
     )

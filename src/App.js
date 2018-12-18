@@ -1,7 +1,7 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
-import ListBooks from './ListBooks';
+import ListShelves from './ListShelves';
 import SearchBooks from './SearchBooks'
 
 // TODO: book list should not crash if no books are present
@@ -30,7 +30,7 @@ class BooksApp extends React.Component {
   }
 
   changeShelf = (book, newShelf) => {
-    if (book.shelf === newShelf) {return}
+    if (book.shelf === newShelf) return
     
     this.setState((prevState) => ({
       books: prevState.books.map((b) => {
@@ -49,8 +49,7 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         {this.state.showSearchPage ? (
-          <SearchBooks books={this.state.books.reduce((map, book) => {map[book.id] = book.shelf; return map}, {})} shelves={['currentlyReading', 'wantToRead', 'read']}
-            onChangeShelf={this.changeShelf}
+          <SearchBooks shelvedBooks={this.state.books.reduce((map, book) => {map[book.id] = book.shelf; return map}, {})} onChangeShelf={this.changeShelf}
           />
           /*
           <div className="search-books">
@@ -75,7 +74,7 @@ class BooksApp extends React.Component {
           </div> */
         ) : (
           <div className="list-books">
-          <ListBooks books={this.state.books} onChangeShelf={this.changeShelf}/>
+        <ListShelves books={this.state.books} onChangeShelf={this.changeShelf} shelves={['currentlyReading', 'wantToRead', 'read']}/>
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
