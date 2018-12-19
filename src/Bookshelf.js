@@ -1,6 +1,6 @@
-import React from 'react'
-import propTypes from 'prop-types'
-import BookGrid from './BookGrid'
+import React from 'react';
+import propTypes from 'prop-types';
+import BookGrid from './BookGrid';
 
 // TODO: change to functional component if no state required
 // TODO: add default text when no books are present in shelf
@@ -13,7 +13,7 @@ class Bookshelf extends React.Component {
   }
 
   render() {
-    const { books, shelfName, onChangeShelf } = this.props
+    const { books, shelfName, onChangeShelf } = this.props;
     return (
       <div className="bookshelf">
         <h2 className="bookshelf-title">{shelfName}</h2>
@@ -23,8 +23,8 @@ class Bookshelf extends React.Component {
             onChangeShelf={onChangeShelf} />
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default Bookshelf
+export default Bookshelf;

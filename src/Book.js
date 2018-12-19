@@ -1,6 +1,6 @@
-import React from 'react'
-import propTypes from 'prop-types'
-import BookshelfChanger from './BookshelfChanger'
+import React from 'react';
+import propTypes from 'prop-types';
+import BookshelfChanger from './BookshelfChanger';
 
 class Book extends React.Component {
   _isMounted = false
@@ -16,37 +16,37 @@ class Book extends React.Component {
   }
 
   componentDidMount() {
-    this._isMounted = true
+    this._isMounted = true;
 
     // Determine cover image dimensions
-    const { imageLinks } = this.props.book
-    if(!imageLinks) return
+    const { imageLinks } = this.props.book;
+    if(!imageLinks) return;
 
-    const coverImage = new Image()
+    const coverImage = new Image();
     coverImage.onload = (event) => {
-      const img = event.target
+      const img = event.target;
       // _isMounted check prevents a warning if the book is unmounted before the image loads
       if(this._isMounted) {
         this.setState({
           coverHeight: img.height > 200 ? 200 : img.height,
           coverWidth: img.width > 130 ? 130 : img.width
-        })
+        });
       }
-    }
-    coverImage.src = imageLinks.thumbnail || imageLinks.smallThumbnail
+    };
+    coverImage.src = imageLinks.thumbnail || imageLinks.smallThumbnail;
   }
 
   componentWillUnmount() {
-    this._isMounted = false
+    this._isMounted = false;
   }
 
   render() {
-    const { book }= this.props
-    const { coverHeight, coverWidth } = this.state
+    const { book }= this.props;
+    const { coverHeight, coverWidth } = this.state;
     const coverURL = (
       book.imageLinks ? 
-      `url(${book.imageLinks.thumbnail || book.imageLinks.smallThumbnail})` 
-      : '')
+        `url(${book.imageLinks.thumbnail || book.imageLinks.smallThumbnail})` 
+        : '');
 
     return (
       <li>
@@ -70,8 +70,8 @@ class Book extends React.Component {
           </div>
         </div>
       </li>
-    )
+    );
   }
 }
 
-export default Book
+export default Book;

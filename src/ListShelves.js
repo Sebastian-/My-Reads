@@ -1,8 +1,8 @@
-import React from 'react'
-import propTypes from 'prop-types'
-import Bookshelf from './Bookshelf'
-import { formatShelfName } from './utils'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import propTypes from 'prop-types';
+import Bookshelf from './Bookshelf';
+import { formatShelfName } from './utils';
+import { Link } from 'react-router-dom';
 
 // TODO: change to functional component if no state required
 // TODO: extract list-books and title into app component
@@ -15,7 +15,7 @@ class ListShelves extends React.Component {
   }
 
   render() {
-    const { books, shelves, onChangeShelf } = this.props
+    const { books, shelves, onChangeShelf } = this.props;
 
     return (
       <div className="list-books">
@@ -33,8 +33,8 @@ class ListShelves extends React.Component {
         </div>
         <Link className="open-search" to="/search">Search</Link>
       </div>
-    )
+    );
   }
 }
 
-export default ListShelves
+export default ListShelves;

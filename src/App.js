@@ -1,9 +1,9 @@
-import React from 'react'
-import * as BooksAPI from './BooksAPI'
-import './App.css'
-import ListShelves from './ListShelves'
-import SearchBooks from './SearchBooks'
-import { Route } from 'react-router-dom'
+import React from 'react';
+import * as BooksAPI from './BooksAPI';
+import './App.css';
+import ListShelves from './ListShelves';
+import SearchBooks from './SearchBooks';
+import { Route } from 'react-router-dom';
 
 class BooksApp extends React.Component {
   state = {
@@ -14,31 +14,31 @@ class BooksApp extends React.Component {
     BooksAPI.getAll().then((books) => {
       this.setState({
         books: books
-      })
-    })
+      });
+    });
   }
 
   changeShelf = (book, newShelf) => {
-    if (book.shelf === newShelf) return
+    if (book.shelf === newShelf) return;
     
     if(!book.shelf) {
-      book.shelf = newShelf
+      book.shelf = newShelf;
       this.setState((prevState) => ({
         books: prevState.books.concat(book)
-      }))
-      return
+      }));
+      return;
     }
 
     this.setState((prevState) => ({
       books: prevState.books.map((b) => {
         if (b.id === book.id) {
-          b.shelf = newShelf
+          b.shelf = newShelf;
         } 
-        return b
+        return b;
       })
     }));
 
-    BooksAPI.update(book, newShelf)
+    BooksAPI.update(book, newShelf);
   }
 
   render() {
@@ -60,8 +60,8 @@ class BooksApp extends React.Component {
               onChangeShelf={this.changeShelf} />
           )} />
       </div>
-    )
+    );
   }
 }
 
-export default BooksApp
+export default BooksApp;

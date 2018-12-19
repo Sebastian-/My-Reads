@@ -1,8 +1,8 @@
-import React from 'react'
-import * as BooksAPI from './BooksAPI'
-import BookGrid from './BookGrid'
-import propTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import * as BooksAPI from './BooksAPI';
+import BookGrid from './BookGrid';
+import propTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 
 class SearchBooks extends React.Component {
@@ -17,38 +17,38 @@ class SearchBooks extends React.Component {
   }
 
   handleChange = (event) => {
-    this.setState({ query: event.target.value}, this.search)
+    this.setState({ query: event.target.value}, this.search);
   }
 
   search = () => {
-    const { query } = this.state
-    const { shelvedBooks } = this.props
+    const { query } = this.state;
+    const { shelvedBooks } = this.props;
 
-    if (!query) return
+    if (!query) return;
 
     BooksAPI.search(query.trim()).then((results) => {
       if(results.error) {
         this.setState({
           results: []
-        })
-        return
+        });
+        return;
       }
       
       // Books returned by the search endpoint do not have a shelf attribute
       const shelvedIDs = shelvedBooks.reduce((shelvedIDs, book) => {
-        shelvedIDs[book.id] = book
-        return shelvedIDs
-      }, {})
-      results = results.map((result) => (shelvedIDs[result.id] || result))
+        shelvedIDs[book.id] = book;
+        return shelvedIDs;
+      }, {});
+      results = results.map((result) => (shelvedIDs[result.id] || result));
       
       this.setState({
         results: results
-      })
-    })
+      });
+    });
   }
 
   render() {
-    const { query, results } = this.state
+    const { query, results } = this.state;
 
     return (
       <div className="search-books">
@@ -68,8 +68,8 @@ class SearchBooks extends React.Component {
             onChangeShelf={this.props.onChangeShelf} />
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default SearchBooks
+export default SearchBooks;

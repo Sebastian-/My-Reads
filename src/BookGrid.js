@@ -1,6 +1,6 @@
-import React from 'react'
-import propTypes from 'prop-types'
-import Book from './Book'
+import React from 'react';
+import propTypes from 'prop-types';
+import Book from './Book';
 
 // TODO: change to functional component if no state required
 
@@ -11,7 +11,7 @@ class BookGrid extends React.Component {
   }
 
   render() {
-    const { books, onChangeShelf } = this.props
+    const { books, onChangeShelf } = this.props;
 
     return (
       <ol className="books-grid">
@@ -22,8 +22,8 @@ class BookGrid extends React.Component {
             onChangeShelf={onChangeShelf}/>
         ))}
       </ol>
-    )
+    );
   }
 }
 
-export default BookGrid
+export default BookGrid;

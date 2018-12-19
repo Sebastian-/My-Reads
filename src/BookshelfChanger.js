@@ -1,6 +1,6 @@
-import React from 'react'
-import propTypes from 'prop-types'
-import { formatShelfName } from './utils'
+import React from 'react';
+import propTypes from 'prop-types';
+import { formatShelfName } from './utils';
 
 class BookshelfChanger extends React.Component {
   static propTypes = {
@@ -10,14 +10,14 @@ class BookshelfChanger extends React.Component {
   }
 
   handleChange = (event) => {
-    const { book, onChangeShelf } = this.props
-    const newShelf = event.target.value
+    const { book, onChangeShelf } = this.props;
+    const newShelf = event.target.value;
     
-    onChangeShelf(book, newShelf)
+    onChangeShelf(book, newShelf);
   }
 
   render() {
-    const { book, shelfOptions } = this.props
+    const { book, shelfOptions } = this.props;
 
     return (
       <div className="book-shelf-changer">
@@ -30,8 +30,8 @@ class BookshelfChanger extends React.Component {
             </option>))}
         </select>
       </div>
-    )
+    );
   }
 }
 
-export default BookshelfChanger
+export default BookshelfChanger;
