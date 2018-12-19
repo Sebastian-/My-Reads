@@ -21,6 +21,14 @@ class BooksApp extends React.Component {
   changeShelf = (book, newShelf) => {
     if (book.shelf === newShelf) return
     
+    if(!book.shelf) {
+      book.shelf = newShelf
+      this.setState((prevState) => ({
+        books: prevState.books.concat(book)
+      }))
+      return
+    }
+
     this.setState((prevState) => ({
       books: prevState.books.map((b) => {
         if (b.id === book.id) {
@@ -48,10 +56,7 @@ class BooksApp extends React.Component {
           exact path="/search"
           render={() => (
             <SearchBooks
-              shelvedBooks={this.state.books.reduce((shelvedBooks, book) => {
-                shelvedBooks[book.id] = book.shelf
-                return shelvedBooks
-              }, {})}
+              shelvedBooks={this.state.books}
               onChangeShelf={this.changeShelf} />
           )} />
       </div>

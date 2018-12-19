@@ -4,13 +4,10 @@ import BookGrid from './BookGrid'
 import propTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-// TODO: extract <ol> of books into separate component
-// TODO: add throttle/debounce to searching (https://www.peterbe.com/plog/how-to-throttle-and-debounce-an-autocomplete-input-in-react)
-// TODO: remove close search div here
 
 class SearchBooks extends React.Component {
   static propTypes = {
-    shelvedBooks: propTypes.object.isRequired,
+    shelvedBooks: propTypes.array.isRequired,
     onChangeShelf: propTypes.func.isRequired
   }
 
@@ -27,7 +24,7 @@ class SearchBooks extends React.Component {
     const { query } = this.state
     const { shelvedBooks } = this.props
 
-    if(!query) return
+    if (!query) return
 
     BooksAPI.search(query.trim()).then((results) => {
       if(results.error) {
@@ -36,15 +33,14 @@ class SearchBooks extends React.Component {
         })
         return
       }
-
+      
       // Books returned by the search endpoint do not have a shelf attribute
-      results = results.map((result) => {
-        if (shelvedBooks[result.id]) {
-          result.shelf = shelvedBooks[result.id]
-        }
-        return result
-      })
-
+      const shelvedIDs = shelvedBooks.reduce((shelvedIDs, book) => {
+        shelvedIDs[book.id] = book
+        return shelvedIDs
+      }, {})
+      results = results.map((result) => (shelvedIDs[result.id] || result))
+      
       this.setState({
         results: results
       })
@@ -53,6 +49,7 @@ class SearchBooks extends React.Component {
 
   render() {
     const { query, results } = this.state
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -67,7 +64,7 @@ class SearchBooks extends React.Component {
         </div>
         <div className="search-books-results">
           <BookGrid 
-            books={query? results : []}
+            books={query ? results : []}
             onChangeShelf={this.props.onChangeShelf} />
         </div>
       </div>
