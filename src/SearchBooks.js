@@ -2,6 +2,7 @@ import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import BookGrid from './BookGrid'
 import propTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 // TODO: extract <ol> of books into separate component
 // TODO: add throttle/debounce to searching (https://www.peterbe.com/plog/how-to-throttle-and-debounce-an-autocomplete-input-in-react)
@@ -55,7 +56,7 @@ class SearchBooks extends React.Component {
     return (
       <div className="search-books">
         <div className="search-books-bar">
-          <button className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</button>
+          <Link className="close-search" to="/">Close Search</Link>
           <div className="search-books-input-wrapper">
             <input 
               type="text"

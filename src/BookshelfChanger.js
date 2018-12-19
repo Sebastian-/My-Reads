@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import * as utils from './utils'
+import { formatShelfName } from './utils'
 
 class BookshelfChanger extends React.Component {
   static propTypes = {
@@ -26,7 +26,7 @@ class BookshelfChanger extends React.Component {
           {shelfOptions.map((shelf) => (
             <option key={shelf} value={shelf}>
               {((book.shelf || 'none') === shelf ? '\u2713' : ' ') + ' '
-              + utils.formatShelfName(shelf)}
+              + formatShelfName(shelf)}
             </option>))}
         </select>
       </div>

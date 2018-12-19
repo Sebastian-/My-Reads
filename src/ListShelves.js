@@ -1,7 +1,8 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import Bookshelf from './Bookshelf'
-import * as utils from './utils'
+import { formatShelfName } from './utils'
+import { Link } from 'react-router-dom'
 
 // TODO: change to functional component if no state required
 // TODO: extract list-books and title into app component
@@ -25,11 +26,12 @@ class ListShelves extends React.Component {
           {shelves.map((shelf) => (
             <Bookshelf 
               key={shelf} 
-              shelfName={utils.formatShelfName(shelf)} 
+              shelfName={formatShelfName(shelf)} 
               books={books.filter((book) => (book.shelf === shelf))}
               onChangeShelf={onChangeShelf}/>
           ))}
         </div>
+        <Link className="open-search" to="/search">Search</Link>
       </div>
     )
   }
