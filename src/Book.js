@@ -3,7 +3,6 @@ import propTypes from 'prop-types';
 import BookshelfChanger from './BookshelfChanger';
 
 class Book extends React.Component {
-  _isMounted = false
 
   static propTypes = {
     book: propTypes.object.isRequired,
@@ -22,26 +21,20 @@ class Book extends React.Component {
     const { imageLinks } = this.props.book;
     if(!imageLinks) return;
 
-    const coverImage = new Image();
-    coverImage.onload = (event) => {
-      const img = event.target;
-      // _isMounted check prevents a warning if the book is unmounted before the image loads
-      if(this._isMounted) {
-        this.setState({
-          coverHeight: img.height > 200 ? 200 : img.height,
-          coverWidth: img.width > 130 ? 130 : img.width
-        });
-      }
-    };
-    coverImage.src = imageLinks.thumbnail || imageLinks.smallThumbnail;
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
+    new Promise((resolve) => {
+      const coverImage = new Image();
+      coverImage.src = imageLinks.thumbnail || imageLinks.smallThumbnail;
+      coverImage.onload = resolve(coverImage);
+    }).then((coverImage) => {
+      this.setState({
+        coverHeight: coverImage.height > 200 ? 200 : coverImage.height,
+        coverWidth: coverImage.width > 130 ? 130 : coverImage.width
+      });
+    });
   }
 
   render() {
-    const { book }= this.props;
+    const { book } = this.props;
     const { coverHeight, coverWidth } = this.state;
     const coverURL = (
       book.imageLinks ? 
