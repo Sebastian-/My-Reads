@@ -1,5 +1,6 @@
 {
   "name": "myreads-app",
+  "homepage": "https://www.hsmdev.com/my-reads",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
